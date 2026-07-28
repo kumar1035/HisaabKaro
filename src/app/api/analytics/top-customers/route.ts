@@ -1,0 +1,4 @@
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { requireUserId } from "@/lib/api-auth";
+export async function GET() { const auth = await requireUserId(); if ("error" in auth) return auth.error; try { const invoices = await prisma.invoice.findMany({ where: { userId: auth.userId }, include: { customer: true } }); const totals = new Map<string, number>(); invoices.forEach(i => { const name = /walk-in/i.test(i.customer.name) ? "Walk-in / B2C" : i.customer.name; totals.set(name, (totals.get(name) ?? 0) + i.grandTotal); }); return NextResponse.json(Array.from(totals.entries()).map(([name, amount]) => ({ name, amount })).sort((a,b) => b.amount-a.amount).slice(0,5)); } catch { return NextResponse.json({ error: "Could not load customers." }, { status: 500 }); } }

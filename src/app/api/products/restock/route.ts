@@ -1,0 +1,5 @@
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { requireUserId } from "@/lib/api-auth";
+import { badRequest, restockSchema } from "@/lib/validation";
+export async function POST(request: Request) { const auth = await requireUserId(); if ("error" in auth) return auth.error; const parsed = restockSchema.safeParse(await request.json()); if (!parsed.success) return NextResponse.json(badRequest(parsed.error), { status: 400 }); const { productId, quantity } = parsed.data; try { const product = await prisma.product.updateMany({ where: { id: productId, userId: auth.userId }, data: { currentStock: { increment: quantity }, lastRestocked: new Date() } }); if (!product.count) return NextResponse.json({ error: "Product not found." }, { status: 404 }); await prisma.auditLog.create({ data: { userId: auth.userId, action: "STOCK_RESTOCKED", metadata: { productId, quantity } } }); return NextResponse.json({ ok: true }); } catch { return NextResponse.json({ error: "Could not restock product." }, { status: 500 }); } }
