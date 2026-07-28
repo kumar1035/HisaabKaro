@@ -1,0 +1,117 @@
+// Production data model for the planned PostgreSQL deployment.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(cuid())
+  email String @unique
+  name String?
+  businessName String?
+  gstin String?
+  address String?
+  state String?
+  phone String?
+  logoUrl String?
+  bankName String?
+  bankAccountNumber String?
+  bankIfsc String?
+  upiId String?
+  invoices Invoice[]
+  customers Customer[]
+  auditLogs AuditLog[]
+  products Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model Product {
+  id String @id @default(cuid())
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  name String
+  hsn String?
+  gstRate Float @default(0)
+  unit String @default("pcs")
+  currentStock Float @default(0)
+  reorderLevel Float @default(10)
+  lastRestocked DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([userId, name])
+  @@index([userId, currentStock])
+}
+model AuditLog {
+  id String @id @default(cuid())
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  invoiceId String?
+  action String
+  metadata Json?
+  createdAt DateTime @default(now())
+  @@index([userId, createdAt])
+  @@index([invoiceId])
+}
+model Customer {
+  id String @id @default(cuid())
+  name String
+  phone String?
+  email String?
+  gstin String?
+  address String?
+  state String?
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  invoices Invoice[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([userId])
+  @@unique([userId, name])
+}
+model Invoice {
+  id String @id @default(cuid())
+  invoiceNumber String
+  customerId String
+  customer Customer @relation(fields: [customerId], references: [id])
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  rawInput String
+  subtotal Float
+  cgst Float @default(0)
+  sgst Float @default(0)
+  igst Float @default(0)
+  totalTax Float
+  grandTotal Float
+  paymentStatus PaymentStatus @default(PENDING)
+  lineItems LineItem[]
+  invoiceDate DateTime @default(now())
+  dueDate DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([userId, invoiceNumber])
+  @@index([userId, invoiceDate])
+}
+model LineItem {
+  id String @id @default(cuid())
+  invoiceId String
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  description String
+  hsnCode String?
+  quantity Float
+  unit String
+  rate Float
+  amount Float
+  gstRate Float
+  gstAmount Float
+  totalAmount Float
+}
+enum PaymentStatus {
+  PENDING
+  PARTIAL
+  PAID
+  OVERDUE
+}

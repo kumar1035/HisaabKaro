@@ -1,0 +1,6 @@
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { requireUserId } from "@/lib/api-auth";
+import { badRequest, customerSchema } from "@/lib/validation";
+export async function GET() { const auth = await requireUserId(); if ("error" in auth) return auth.error; try { return NextResponse.json(await prisma.customer.findMany({ where: { userId: auth.userId }, orderBy: { name: "asc" } })); } catch { return NextResponse.json({ error: "Database unavailable." }, { status: 503 }); } }
+export async function POST(request: Request) { const auth = await requireUserId(); if ("error" in auth) return auth.error; try { const parsed = customerSchema.safeParse(await request.json()); if (!parsed.success) return NextResponse.json(badRequest(parsed.error), { status: 400 }); const customer = await prisma.customer.create({ data: { userId: auth.userId, ...parsed.data, phone: parsed.data.phone || null, email: parsed.data.email || null, gstin: parsed.data.gstin || null, address: parsed.data.address || null, state: parsed.data.state || null } }); return NextResponse.json(customer, { status: 201 }); } catch { return NextResponse.json({ error: "A customer with this name already exists." }, { status: 409 }); } }

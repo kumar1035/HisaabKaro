@@ -1,0 +1,6 @@
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
+import { requireUserId } from "@/lib/api-auth";
+import { badRequest, customerSchema } from "@/lib/validation";
+export async function GET(_: Request, { params }: { params: { id: string } }) { const auth = await requireUserId(); if ("error" in auth) return auth.error; const customer = await prisma.customer.findFirst({ where: { id: params.id, userId: auth.userId } }); return customer ? NextResponse.json(customer) : NextResponse.json({ error: "Not found" }, { status: 404 }); }
+export async function PATCH(request: Request, { params }: { params: { id: string } }) { const auth = await requireUserId(); if ("error" in auth) return auth.error; const parsed = customerSchema.safeParse(await request.json()); if (!parsed.success) return NextResponse.json(badRequest(parsed.error), { status: 400 }); try { const result = await prisma.customer.updateMany({ where: { id: params.id, userId: auth.userId }, data: parsed.data }); return result.count ? NextResponse.json({ ok: true }) : NextResponse.json({ error: "Not found" }, { status: 404 }); } catch { return NextResponse.json({ error: "Could not update customer." }, { status: 400 }); } }

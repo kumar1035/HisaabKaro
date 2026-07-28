@@ -1,0 +1,16 @@
+import Link from "next/link";
+import { ArrowRight, CheckCircle2, FileText, Landmark, Sparkles } from "lucide-react";
+import { SignInButton } from "@/components/SignInButton";
+
+export default function Home() {
+  return <main className="min-h-screen bg-canvas text-[#1A1A1A]">
+    <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5"><Logo /><SignInButton /></nav>
+    <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-24 pt-16 lg:grid-cols-2 lg:items-center lg:pt-24">
+      <div><p className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#d9e5de] bg-white px-3 py-1.5 text-sm font-semibold text-forest"><Sparkles size={15} /> Built for Bharat&apos;s businesses</p><h1 className="max-w-xl text-5xl font-bold leading-[1.08] tracking-tight text-forest sm:text-6xl">Your kirana&apos;s hisaab, now handled by AI.</h1><p className="mt-6 max-w-lg text-lg leading-8 text-gray-600">Describe a sale in Hindi, English, or Hinglish. HisaabKaro turns it into a GST-ready invoice in seconds.</p><div className="mt-8 flex flex-wrap gap-3"><Link href="/dashboard" className="inline-flex items-center gap-2 rounded-md bg-amber px-5 py-3 font-bold text-[#422600] shadow-sm">Create an invoice <ArrowRight size={18}/></Link><a href="#how" className="rounded-md border border-gray-300 bg-white px-5 py-3 font-semibold">See how it works</a></div></div>
+      <div className="rounded-2xl border border-[#d9e5de] bg-white p-5 shadow-xl shadow-[#1b4d3e]/10"><div className="rounded-xl bg-[#f1f5f2] p-5"><p className="text-xs font-bold uppercase tracking-widest text-forest">Describe your sale</p><p className="mt-3 text-lg text-gray-700">“Sharma ji ko 50kg aata 48/kg aur 20kg cheeni 42/kg becha”</p><div className="mt-5 flex items-center gap-3 text-sm font-semibold text-forest"><CheckCircle2 size={19}/> Parsed <ArrowRight size={15}/><CheckCircle2 size={19}/> GST classified <ArrowRight size={15}/><CheckCircle2 size={19}/> Invoice ready</div></div><div className="mt-4 flex items-center justify-between border-t pt-4"><div><p className="font-mono text-sm text-gray-500">HK-2026-0003</p><p className="font-bold">Sharma Ji</p></div><p className="text-2xl font-bold text-forest">₹3,402</p></div></div>
+    </section>
+    <section id="how" className="border-y border-[#e5e7eb] bg-white"><div className="mx-auto grid max-w-6xl gap-8 px-6 py-14 md:grid-cols-3"><Value icon={<Sparkles/>} title="Speak naturally" text="Use the language you use every day — Hindi, English, or Hinglish."/><Value icon={<Landmark/>} title="Stay GST-ready" text="HSN codes and tax breakdowns are calculated automatically."/><Value icon={<FileText/>} title="Share confidently" text="Create clean invoices you can print or share on WhatsApp."/></div></section>
+  </main>;
+}
+function Logo(){return <div className="flex items-center gap-2 font-bold text-forest"><span className="grid h-9 w-9 place-items-center rounded-lg bg-forest text-lg text-white">₹</span><span className="text-xl">Hisaab<span className="text-amber">Karo</span></span></div>}
+function Value({icon,title,text}:{icon:React.ReactNode;title:string;text:string}){return <div><div className="mb-4 text-forest">{icon}</div><h2 className="text-lg font-bold">{title}</h2><p className="mt-2 leading-6 text-gray-600">{text}</p></div>}
