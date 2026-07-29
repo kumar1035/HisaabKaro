@@ -1,139 +1,198 @@
-# HisaabKaro — AI Billing Agent for Bharat's Small Businesses
+<p align="center">
+  <img src="https://img.shields.io/badge/Built_for-Bharat's_Businesses-1B4332?style=for-the-badge" alt="Built for Bharat" />
+  <img src="https://img.shields.io/badge/OpenAI-Hackathon_2026-412991?style=for-the-badge&logo=openai&logoColor=white" alt="OpenAI Hackathon" />
+  <img src="https://img.shields.io/badge/Next.js_14-black?style=for-the-badge&logo=next.js&logoColor=white" alt="Next.js" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+</p>
 
-HisaabKaro is a bilingual, AI-assisted GST billing workspace for Indian kirana stores, retailers, and MSMEs. A business owner describes a sale in Hindi, English, or Hinglish; HisaabKaro extracts items, quantity, price, HSN and GST rate, runs compliance checks, and creates a shareable GST invoice.
+<h1 align="center">₹ HisaabKaro</h1>
+<p align="center"><strong>AI Billing & GST Compliance Agent for Bharat's Small Businesses</strong></p>
+<p align="center">
+  <a href="https://hisaab-karo.vercel.app">Live Demo</a> · <a href="https://github.com/kumar1035/HisaabKaro">Source Code</a>
+</p>
 
-It is built for the hackathon theme **AI Agents for Bharat's Businesses**: practical automation for retail and MSME back offices, where business owners commonly rely on paper, WhatsApp, calculators, and manual GST work.
+---
 
-## The problem
+## Overview
 
-Creating a correct GST invoice is repetitive and error-prone. The seller must enter products, quantities, rates, HSN codes, GST slabs, customer information, payment details, and tax mode. This is especially difficult for owners who are more comfortable using Hindi or Hinglish than complex accounting software.
+HisaabKaro is a bilingual, AI-powered GST billing workspace designed for Indian kirana stores, retailers, and MSMEs. A shopkeeper describes a sale in **Hindi, English, or Hinglish** — and HisaabKaro's AI agent extracts line items, quantities, prices, HSN codes, and GST rates, runs compliance checks, and generates a shareable GST-compliant invoice — all in seconds.
 
-## What we built
+> **"Sharma ji ko 10kg aata 45/kg aur 5 sabun 35 mein becha"**
+> → Parsed → GST classified → Invoice ready → ₹3,402
 
-HisaabKaro acts as an AI billing and compliance assistant:
+Built for the **OpenAI Hackathon** theme: *AI Agents for Bharat's Businesses*.
 
-- Natural-language sale entry in Hindi, English, and Hinglish.
-- OpenAI structured parsing when configured, with a deterministic offline fallback for common kirana products.
-- Editable extracted items: description, HSN, quantity, unit, rate, and GST rate.
-- GST compliance review before saving: GSTIN, HSN, GST slab, arithmetic, dates, and CGST/SGST vs IGST checks.
-- B2B customer records and B2C/walk-in sale support.
-- Private Google-authenticated accounts, with data scoped to the signed-in owner.
-- Business settings for GSTIN, address, bank account, IFSC, logo and UPI ID.
-- Branded GST PDF download, UPI payment QR on the invoice screen, and WhatsApp invoice/payment reminders.
-- Invoice history, payment statuses, analytics, product sales summaries, and GSTR-1-oriented CSV export.
-- Audit entries for invoice creation, payment-status updates, and void actions.
+## The Problem
 
-## Theme fit: AI Agents for Bharat's Businesses
+Millions of small businesses in India still rely on paper registers, WhatsApp messages, and manual calculators for billing. Creating a correct GST invoice requires entering products, quantities, rates, HSN codes, GST slabs, customer GSTIN, payment details, and determining the correct tax mode (CGST+SGST vs. IGST). This process is slow, error-prone, and especially challenging for business owners who are more comfortable in Hindi or Hinglish than in complex accounting software.
 
-| Theme expectation | HisaabKaro response |
-| --- | --- |
-| Retail and MSME automation | Converts a daily sale into a usable invoice and payment workflow. |
-| WhatsApp invoicing | Shares invoice and payment-reminder messages through WhatsApp. |
-| GST reminder agent | Compliance review, tax-mode checks, pending-payment reminders, and GSTR-1 export. |
-| Bilingual support | Hindi/Hinglish sale input and an English/Hindi dashboard navigation mode. |
-| MSME back office in a box | Customers, billing, GST, payments, analytics and business profile in one place. |
+## Our Solution
 
-## Technology
+HisaabKaro reimagines invoicing as a conversation. Instead of filling forms, the shopkeeper simply **describes the sale naturally**, and AI handles the rest.
 
-- Next.js 14 App Router + TypeScript
-- Tailwind CSS
-- Prisma + PostgreSQL (Neon compatible)
-- NextAuth Google OAuth
-- Zod request validation
-- OpenAI Responses API with local parser fallback
-- `@react-pdf/renderer`, `qrcode.react`, and Recharts
+### Core Capabilities
+
+- **Natural-Language Invoice Creation** — Describe a sale in Hindi, English, or Hinglish. The AI agent parses items, quantities, rates, HSN codes, and GST slabs automatically.
+- **OpenAI-Powered Parsing + Offline Fallback** — Uses OpenAI's structured output API for intelligent extraction; falls back to a deterministic local parser for common kirana products when offline or unconfigured.
+- **GST Compliance Agent** — Validates GSTIN format, HSN code length, GST slab correctness, arithmetic accuracy, invoice dates, and auto-selects CGST+SGST or IGST based on buyer/seller state.
+- **Editable Extracted Data** — Every parsed field (description, HSN, quantity, unit, rate, GST%) is editable before invoice generation, keeping the shopkeeper in control.
+- **B2B & B2C Support** — Manage saved GST customers for B2B sales or create walk-in/B2C invoices instantly.
+- **Branded GST Invoice PDF** — Download a professional invoice with business logo, GSTIN, itemized tax breakup, and bank details.
+- **UPI Payment Integration** — Auto-generates UPI QR codes and payment links on the invoice for instant collection.
+- **WhatsApp Reminders** — Share invoices and send respectful payment reminders directly via WhatsApp.
+- **Analytics Dashboard** — Track revenue, taxable amounts, CGST/SGST/IGST breakdowns, product-wise sales, and invoice counts at a glance.
+- **GSTR-1 CSV Export** — Export invoice data in a GSTR-1-ready format for simplified tax filing.
+- **Bilingual Dashboard** — Full Hindi/English toggle across the dashboard for accessibility.
+- **Inventory Alerts** — Low-stock warnings with reorder prompts.
+- **Secure & Private** — Google OAuth authentication with per-user data isolation. Every invoice, customer, and setting is scoped to the signed-in business owner.
+- **Audit Trail** — Logged entries for invoice creation, payment-status updates, and void actions.
+
+## Theme Fit: AI Agents for Bharat's Businesses
+
+| Theme Expectation | HisaabKaro's Response |
+|---|---|
+| Retail & MSME Automation | Converts a spoken/typed sale into a complete invoice and payment workflow |
+| WhatsApp Invoicing | Shares invoices and payment reminders via WhatsApp |
+| GST Compliance Agent | Automated tax validation, state-based tax mode, and GSTR-1 export |
+| Bilingual Support | Hindi/Hinglish natural-language input with full Hindi dashboard UI |
+| MSME Back Office in a Box | Customers, billing, GST, payments, analytics, and business profile — unified |
 
 ## Architecture
 
-```text
-Sale in Hindi / English / Hinglish
-              |
-              v
-      Parse agent + offline fallback
-              |
-              v
- Editable line items and saved customer selection
-              |
-              v
- Compliance-review agent (GST + state tax mode)
-              |
-              v
- Prisma / PostgreSQL per-user invoice records
-              |
-              +--> PDF + UPI + WhatsApp reminder
-              +--> Analytics + GSTR-1 CSV
+```
+┌──────────────────────────────────────────────┐
+│        Shopkeeper Input (Hindi / Hinglish)    │
+└──────────────────┬───────────────────────────┘
+                   ▼
+┌──────────────────────────────────────────────┐
+│   AI Parse Agent (OpenAI) + Offline Fallback │
+│   → Items, Qty, Rate, HSN, GST%             │
+└──────────────────┬───────────────────────────┘
+                   ▼
+┌──────────────────────────────────────────────┐
+│   Editable Line Items + Customer Selection   │
+└──────────────────┬───────────────────────────┘
+                   ▼
+┌──────────────────────────────────────────────┐
+│   GST Compliance Review Agent                │
+│   → GSTIN, HSN, Slab, Tax Mode Validation   │
+└──────────────────┬───────────────────────────┘
+                   ▼
+┌──────────────────────────────────────────────┐
+│   Prisma + PostgreSQL (Per-User Records)     │
+└───┬──────────┬───────────┬───────────────────┘
+    ▼          ▼           ▼
+  PDF +     Analytics   GSTR-1
+  UPI QR +  Dashboard   CSV Export
+  WhatsApp
 ```
 
-## Quick start
+## Tech Stack
 
-1. Install dependencies.
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 14 (App Router) + TypeScript |
+| Styling | Tailwind CSS |
+| Database | Prisma ORM + PostgreSQL (Neon-compatible) |
+| Authentication | NextAuth.js with Google OAuth |
+| AI Engine | OpenAI Responses API (with local parser fallback) |
+| Validation | Zod schema validation |
+| PDF Generation | `@react-pdf/renderer` |
+| Charts | Recharts |
+| QR Codes | `qrcode.react` |
 
-   ```powershell
-   npm.cmd install
-   ```
+## Getting Started
 
-2. Copy `.env.example` to `.env.local` and set the required environment variables.
+### Prerequisites
 
-3. Synchronize the database and generate Prisma Client.
+- Node.js 18+
+- PostgreSQL database (or a Neon serverless instance)
+- Google OAuth credentials
+- OpenAI API key (optional — enables AI parsing)
 
-   ```powershell
-   npx.cmd prisma db push
-   npx.cmd prisma generate
-   ```
+### Installation
 
-4. Start the app.
+```bash
+# 1. Clone the repository
+git clone https://github.com/kumar1035/HisaabKaro.git
+cd HisaabKaro
 
-   ```powershell
-   npm.cmd run dev
-   ```
+# 2. Install dependencies
+npm install
 
-Open `http://localhost:3000`, sign in with Google, and open the dashboard.
+# 3. Configure environment variables
+cp .env.example .env.local
+# Edit .env.local with your credentials
 
-## Environment variables
+# 4. Set up the database
+npx prisma db push
+npx prisma generate
 
-```env
-DATABASE_URL=
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-NEXTAUTH_SECRET=
-OPENAI_API_KEY=                 # optional; enables AI parsing
-OPENAI_PARSER_MODEL=gpt-4.1-mini # optional
+# 5. Start the development server
+npm run dev
 ```
 
-Without `OPENAI_API_KEY`, supported kirana phrases still work through the offline parser.
+Open [http://localhost:3000](http://localhost:3000), sign in with Google, and start billing.
 
-## Demo script for judges
+### Environment Variables
 
-See [walkthrough/README.md](walkthrough/README.md) for the full 3-minute walkthrough. The short version:
+| Variable | Required | Description |
+|---|---|---|
+| `DATABASE_URL` | Yes | PostgreSQL connection string |
+| `GOOGLE_CLIENT_ID` | Yes | Google OAuth client ID |
+| `GOOGLE_CLIENT_SECRET` | Yes | Google OAuth client secret |
+| `NEXTAUTH_SECRET` | Yes | NextAuth session encryption key |
+| `OPENAI_API_KEY` | No | Enables AI-powered sale parsing |
+| `OPENAI_PARSER_MODEL` | No | Model override (default: `gpt-4.1-mini`) |
 
-1. Sign in and add business GSTIN/state/UPI details.
-2. Add a GST customer, or create a walk-in/B2C sale.
-3. Enter: `Sharma ji ko 10kg aata 45/kg aur 5 sabun 35 mein becha`.
-4. Parse the sale; show auto-filled quantity, rate, HSN and GST.
-5. Review compliance, correct any warning, and generate the invoice.
-6. Show the PDF, UPI QR, WhatsApp reminder, analytics, and GSTR-1 export.
+> Without an OpenAI key, common kirana sale phrases are still parsed via the built-in deterministic fallback.
 
-## Verification
+## Project Structure
 
-```powershell
-npx.cmd tsc --noEmit
+```
+src/
+├── app/
+│   ├── dashboard/page.tsx          # Main billing dashboard
+│   ├── api/
+│   │   ├── invoices/               # Invoice CRUD & status management
+│   │   ├── customers/              # Per-user customer management
+│   │   ├── analytics/              # Revenue & GST analytics
+│   │   └── gst-export/             # GSTR-1 CSV export
+├── agents/
+│   └── compliance-reviewer.ts      # GST compliance & tax-mode logic
+├── lib/
+│   └── parser.ts                   # AI + offline sale parsing
+prisma/
+└── schema.prisma                   # Data models (User, Invoice, Customer, LineItem, Audit)
 ```
 
-## Important project files
+## Demo Walkthrough
 
-| File | Purpose |
-| --- | --- |
-| `src/app/dashboard/page.tsx` | Billing dashboard and shopkeeper workflow |
-| `src/lib/parser.ts` | AI/offline sale parsing fallback |
-| `src/agents/compliance-reviewer.ts` | GST compliance and state-tax logic |
-| `src/app/api/invoices` | Authenticated invoice persistence and status management |
-| `src/app/api/customers` | Per-user customer management |
-| `src/app/api/analytics` | GST and product analytics |
-| `src/app/api/gst-export` | GSTR-1-ready CSV export |
-| `prisma/schema.prisma` | User, invoice, customer, line-item and audit models |
+1. **Sign in** with Google and configure business profile (GSTIN, state, UPI ID)
+2. **Add a customer** with GSTIN for B2B, or choose walk-in for B2C
+3. **Describe the sale**: *"Sharma ji ko 10kg aata 45/kg aur 5 sabun 35 mein becha"*
+4. **Review parsed data** — auto-filled items, quantities, HSN codes, and GST rates
+5. **Run compliance check** — the agent validates GST rules and flags issues
+6. **Generate invoice** — download PDF, scan UPI QR, send via WhatsApp
+7. **View analytics** — revenue, tax breakdowns, product sales, and GSTR-1 export
 
-## Production notes
+## Live Demo
 
-HisaabKaro does not process card payments itself. It produces UPI payment links/QR codes and WhatsApp reminders. A live payment gateway such as Razorpay, Cashfree, PhonePe, or a bank UPI reconciliation webhook can be added when merchant credentials are available.
+🔗 **[hisaab-karo.vercel.app](https://hisaab-karo.vercel.app)**
 
-Never commit `.env` or `.env.local`.
+## Future Roadmap
+
+- Payment gateway integration (Razorpay / Cashfree / PhonePe) with webhook reconciliation
+- Browser speech recognition for hands-free voice billing
+- OCR for supplier bill digitization
+- Inventory and reorder AI agents
+- Expanded Hindi translations across all dashboard forms and error states
+- Automated test coverage (unit, API, and E2E)
+
+## License
+
+This project was built for the OpenAI Hackathon 2026.
+
+---
+
+<p align="center"><strong>HisaabKaro</strong> — अपना हिसाब, अपनी भाषा में</p>
